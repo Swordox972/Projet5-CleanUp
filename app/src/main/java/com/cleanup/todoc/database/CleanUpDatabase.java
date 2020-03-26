@@ -7,6 +7,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.ContentValues;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 
 import com.cleanup.todoc.database.dao.ProjectDao;
@@ -32,7 +33,6 @@ public abstract class CleanUpDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             CleanUpDatabase.class, "MyDatabase.db")
-                            .addCallback(prepopulateDatabase())
                             .build();
                 }
             }
@@ -40,19 +40,5 @@ public abstract class CleanUpDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static Callback prepopulateDatabase() {
-        return new Callback() {
-            @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                super.onCreate(db);
 
-                ContentValues contentValues = new ContentValues();
-                contentValues.put("id", 4L);
-                contentValues.put("name", "Projet Lol");
-                contentValues.put("color", 000000);
-
-                db.insert("Project", OnConflictStrategy.IGNORE, contentValues);
-            }
-        };
-    }
 }
