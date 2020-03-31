@@ -16,4 +16,11 @@ public class ProjectDataRepository {
     public LiveData<Project> getProject(long projectId) {
         return this.projectDao.getProjectById(projectId);
     }
+
+    public void InitializeProjectInDatabase() {
+        for (Project project : Project.getAllProjects()) {
+            projectDao.createProject(project);
+        }
+
+    }
 }

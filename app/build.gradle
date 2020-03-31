@@ -10,9 +10,20 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        release {
+            storeFile file(project.file("keystore/KeyStore.jks"))
+            storePassword "azerty"
+            keyAlias "todoc-master"
+            keyPassword "azerty"
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -23,6 +34,8 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
+
 }
 
 dependencies {

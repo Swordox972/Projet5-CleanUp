@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         tasks.remove(task);
         // DELETE TASK FROM DATABASE
         taskViewModel.deleteTask(task);
-        updateTasks();
+
     }
 
     /**
@@ -221,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         tasks.add(task);
         // ADD TASK TO THE DATABASE
         taskViewModel.createTask(task);
-        updateTasks();
+
     }
 
     /**

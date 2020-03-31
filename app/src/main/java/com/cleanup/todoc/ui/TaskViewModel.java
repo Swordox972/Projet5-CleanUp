@@ -26,6 +26,12 @@ public class TaskViewModel extends ViewModel {
         this.taskDataSource = taskDataRepository;
         this.projectDataSource = projectDataRepository;
         this.executor = executor;
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                projectDataSource.InitializeProjectInDatabase();
+            }
+        });
     }
 
     public void init(long projectId) {
