@@ -112,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                 showAddTaskDialog();
             }
         });
+
+        this.configureViewModel();
     }
 
     @Override
@@ -142,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     @Override
     public void onDeleteTask(Task task) {
         tasks.remove(task);
+        // DELETE TASK FROM DATABASE
+        taskViewModel.deleteTask(task);
         updateTasks();
     }
 
@@ -215,6 +219,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      */
     private void addTask(@NonNull Task task) {
         tasks.add(task);
+        // ADD TASK TO THE DATABASE
+        taskViewModel.createTask(task);
         updateTasks();
     }
 
@@ -244,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
             }
             adapter.updateTasks(tasks);
+
         }
     }
 

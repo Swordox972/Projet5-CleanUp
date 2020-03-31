@@ -21,8 +21,8 @@ public interface TaskDao {
     long insertTask(Task task);
 
     // Read
-    @Query("SELECT * FROM Task WHERE projectId= :id")
-    LiveData<List<Task>> getTasks(long id);
+    @Query("SELECT * FROM Task WHERE projectId= :projectId")
+    LiveData<List<Task>> getTasks(long projectId);
 
     // Update
     @Update

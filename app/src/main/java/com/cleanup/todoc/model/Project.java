@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
  *
  * @author Gaëtan HERFRAY
  */
-@Entity()
+@Entity
 public class Project {
 
 
