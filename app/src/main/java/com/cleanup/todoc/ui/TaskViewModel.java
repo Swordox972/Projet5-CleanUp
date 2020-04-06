@@ -29,7 +29,7 @@ public class TaskViewModel extends ViewModel {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                projectDataSource.InitializeProjectInDatabase();
+                projectDataSource.initializeProjectInDatabase();
             }
         });
     }

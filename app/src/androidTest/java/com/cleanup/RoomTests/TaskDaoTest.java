@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.cleanup.todoc.database.CleanUpDatabase;
+import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 
@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 public class TaskDaoTest {
 
     // FOR DATA
-    private CleanUpDatabase database;
+    private TodocDatabase database;
 
     // DATA FOR TEST
     private static long PROJECT_ID = 4;
@@ -41,7 +41,7 @@ public class TaskDaoTest {
     @Before
     public void initDb() throws Exception {
         this.database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
-                CleanUpDatabase.class)
+                TodocDatabase.class)
                 .allowMainThreadQueries()
                 .build();
     }
@@ -52,9 +52,9 @@ public class TaskDaoTest {
     }
 
     @Test
-    public void getTasksShouldBeEmpty() throws InterruptedException{
+    public void getTasksShouldBeEmpty() throws InterruptedException {
         //TEST
-        List<Task> tasks= LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID));
+        List<Task> tasks = LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID));
         assertTrue(tasks.isEmpty());
     }
 
@@ -72,31 +72,31 @@ public class TaskDaoTest {
 
     @Test
     public void insertAndGetTasks() throws InterruptedException {
-      // 1- ADD PROJECT DEMO AND 2-ADD MY DEMO TASKS
+        // 1- ADD PROJECT DEMO AND 2-ADD MY DEMO TASKS
         this.database.projectDao().createProject(PROJECT_DEMO);
         this.database.taskDao().insertTask(task);
         this.database.taskDao().insertTask(task2);
         this.database.taskDao().insertTask(task3);
 
         // GET LIST TASK AND ASSER SIZE == 3
-        List<Task> tasks= LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID));
+        List<Task> tasks = LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID));
         assertTrue(tasks.size() == 3);
     }
 
     @Test
-    public void insertAndUpdateTasks() throws InterruptedException{
+    public void insertAndUpdateTasks() throws InterruptedException {
         // 1-ADD PROJECT DEMO AND TASK 2- READ TASK AND UPDATE IT
         this.database.projectDao().createProject(PROJECT_DEMO);
         this.database.taskDao().insertTask(task);
 
-        Task taskAdded= LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID)).get(0);
-         taskAdded.setName("Faire la lessive");
+        Task taskAdded = LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID)).get(0);
+        taskAdded.setName("Faire la lessive");
         this.database.taskDao().updateTask(taskAdded);
 
         //TEST
-       List<Task> tasks= LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID));
-       assertTrue(!tasks.get(0).getName().equals(task.getName())
-               && tasks.get(0).getName().equals("Faire la lessive"));
+        List<Task> tasks = LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID));
+        assertTrue(!tasks.get(0).getName().equals(task.getName())
+                && tasks.get(0).getName().equals("Faire la lessive"));
 
     }
 
@@ -105,11 +105,11 @@ public class TaskDaoTest {
         // ADD PROJECT, ADD TASK, RETRIEVE TASK AND DELETE IT
         this.database.projectDao().createProject(PROJECT_DEMO);
         this.database.taskDao().insertTask(task2);
-       Task taskAdded= LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID)).get(0);
-       this.database.taskDao().deleteTask(taskAdded);
+        Task taskAdded = LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID)).get(0);
+        this.database.taskDao().deleteTask(taskAdded);
 
-       // TEST
-        List<Task> tasks= LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID));
+        // TEST
+        List<Task> tasks = LiveDataTestUtil.getValue(this.database.taskDao().getTasks(PROJECT_ID));
         assertTrue(tasks.isEmpty());
 
 

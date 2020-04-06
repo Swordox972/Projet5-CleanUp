@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
         });
 
+        //CALL VIEW MODEL
         this.configureViewModel();
     }
 
