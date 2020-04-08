@@ -223,7 +223,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * @param task the task to be added to the list
      */
     private void addTask(@NonNull Task task) {
-        tasks.add(task);
         // ADD TASK TO THE DATABASE
         taskViewModel.createTask(task);
 
@@ -319,20 +318,13 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.taskViewModel = ViewModelProviders.of(this, mViewModelFactory).get(TaskViewModel.class);
-      taskViewModel.currentProject.observe(this, new Observer<Project>() {
-          @Override
-          public void onChanged(@Nullable Project project) {
-
-          }
-      });
-
-      taskViewModel.currentTasks.observe(this, new Observer<List<Task>>() {
-          @Override
-          public void onChanged(@Nullable List<Task> tasks) {
-              updateTasks(tasks);
-          }
-      });
-        }
+        taskViewModel.tasks().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(@Nullable List<Task> tasks) {
+                updateTasks(tasks);
+            }
+        });
+    }
 
 
     /**
