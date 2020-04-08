@@ -1,5 +1,6 @@
 package com.cleanup.todoc.ui;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.cleanup.todoc.model.Task;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>Home activity of the application which is displayed when the user opens the app.</p>
@@ -138,10 +140,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             sortMethod = SortMethod.RECENT_FIRST;
         }
 
-        updateTasks();
+        updateTasks(new ArrayList<>(this.tasks));
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onDeleteTask(Task task) {
@@ -229,7 +232,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * Updates the list of tasks in the UI
      */
-    private void updateTasks() {
+    private void updateTasks(List<Task> tasks) {
+        this.tasks.clear();
+        this.tasks.addAll(tasks);
         if (tasks.size() == 0) {
             lblNoTasks.setVisibility(View.VISIBLE);
             listTasks.setVisibility(View.GONE);
@@ -314,15 +319,20 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     private void configureViewModel() {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         this.taskViewModel = ViewModelProviders.of(this, mViewModelFactory).get(TaskViewModel.class);
-        for (int i = 0; i < allProjects.length; i++) {
-            this.taskViewModel.init(i);
-        }
-    }
+      taskViewModel.currentProject.observe(this, new Observer<Project>() {
+          @Override
+          public void onChanged(@Nullable Project project) {
 
-    // GET CURRENT PROJECT
-    private void getCurrentProject(int projectId) {
-        this.taskViewModel.getProject(projectId);
-    }
+          }
+      });
+
+      taskViewModel.currentTasks.observe(this, new Observer<List<Task>>() {
+          @Override
+          public void onChanged(@Nullable List<Task> tasks) {
+              updateTasks(tasks);
+          }
+      });
+        }
 
 
     /**

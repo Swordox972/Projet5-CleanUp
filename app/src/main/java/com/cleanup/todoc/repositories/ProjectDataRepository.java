@@ -17,10 +17,9 @@ public class ProjectDataRepository {
         return this.projectDao.getProjectById(projectId);
     }
 
-    public void initializeProjectInDatabase() {
-        for (Project project : Project.getAllProjects()) {
-            projectDao.createProject(project);
-        }
-
+    public void createProject(Project project) {
+        projectDao.createProject(project);
     }
+
 }
+
