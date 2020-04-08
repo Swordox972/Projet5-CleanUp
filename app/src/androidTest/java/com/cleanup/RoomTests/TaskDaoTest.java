@@ -29,15 +29,15 @@ public class TaskDaoTest {
     // DATA FOR TEST
     private static long PROJECT_ID = 4;
     private static Project PROJECT_DEMO = new Project(PROJECT_ID, "Projet Lol", Color.blue(255));
-    private static long PROJECT_ID_BIS=5;
-    private static Project PROJECT_DEMO_BIS= new Project(PROJECT_ID_BIS, "Projet mdr", Color.red(255));
+    private static long PROJECT_ID_BIS = 5;
+    private static Project PROJECT_DEMO_BIS = new Project(PROJECT_ID_BIS, "Projet mdr", Color.red(255));
 
     // TASKS FOR TEST
     private static Task task = new Task(1, PROJECT_ID, "Faire le ménage", 1);
     private static Task task2 = new Task(2, PROJECT_ID, "Faire la vaisselle", 1);
     private static Task task3 = new Task(3, PROJECT_ID, "Passer l'aspirateur", 2);
 
-    private static Task task1_bis= new Task(4, PROJECT_ID_BIS, "Faire le ménage", 1);
+    private static Task task1_bis = new Task(4, PROJECT_ID_BIS, "Faire le ménage", 1);
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
@@ -129,9 +129,9 @@ public class TaskDaoTest {
         this.database.taskDao().insertTask(task1_bis);
 
         // TEST OUR getTasks() METHOD
-        List<Task> tasks= LiveDataTestUtil.getValue(this.database.taskDao().getTasks());
+        List<Task> tasks = LiveDataTestUtil.getValue(this.database.taskDao().getTasks());
 
-        assertTrue(tasks.size()==2 && task.getProjectId()==4 &&
+        assertTrue(tasks.size() == 2 && task.getProjectId() == 4 &&
                 task1_bis.getProjectId() == 5);
     }
 }

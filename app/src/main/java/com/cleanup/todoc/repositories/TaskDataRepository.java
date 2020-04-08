@@ -23,6 +23,7 @@ public class TaskDataRepository {
     public LiveData<List<Task>> getTasks() {
         return this.taskDao.getTasks();
     }
+
     // CREATE
     public void createTask(Task task) {
         taskDao.insertTask(task);

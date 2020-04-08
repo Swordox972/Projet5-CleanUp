@@ -27,6 +27,7 @@ public interface TaskDao {
     // Read all Tasks whathever the project
     @Query("SELECT * FROM TASK")
     LiveData<List<Task>> getTasks();
+
     // Update
     @Update
     int updateTask(Task task);
